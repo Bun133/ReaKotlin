@@ -1,114 +1,196 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="5666c2b6-1263-4385-8684-d2ce8931eb1a" name="変更" comment="[add] init">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/ReaKotlin.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/CoroutineMain.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/server/BaseServerSocket.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/server/HTTPServerSocket.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/server/Handler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/server/Server.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/server/ServerSocket.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="24" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ReaKotlin" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ReaKotlin" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+        <option value="Kotlin File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <branch-grouping />
+    <option name="INCOMING_COMMITS_CHECK_STRATEGY" value="FETCH" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Bun133"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Bun133&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Bun133/ReaKotlin.git",
-    "accountId": "170822d2-f2fc-4703-858a-dbe4166b495b"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Bun133/ReaKotlin.git&quot;,
+    &quot;accountId&quot;: &quot;170822d2-f2fc-4703-858a-dbe4166b495b&quot;
   }
-}]]></component>
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0030860988744663" />
-      <entry key="MS500" value="1.3146892933762144" />
-      <entry key="S2" value="1.7489804672120912" />
-      <entry key="S5" value="1.8908163854203583" />
-      <entry key="S10" value="1.9438306974348514" />
-      <entry key="S30" value="1.9809149782536248" />
-      <entry key="S60" value="1.9904115196490926" />
-      <entry key="M2" value="1.9951942120255186" />
-      <entry key="M5" value="1.998074906212651" />
-      <entry key="M10" value="1.9990369894116289" />
-      <entry key="M15" value="1.9993578898536923" />
-      <entry key="M30" value="1.9996788933721128" />
-      <entry key="H1" value="1.9998394337953034" />
-      <entry key="H2" value="1.9999197136747047" />
-      <entry key="H4" value="1.9999598560315832" />
-      <entry key="D1" value="1.999993309226682" />
-      <entry key="W1" value="1.9999990441724995" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0000005430192074" />
+      <entry key="S5" value="1.003141112123851" />
+      <entry key="S10" value="1.0606128648495678" />
+      <entry key="S30" value="1.5534085038917764" />
+      <entry key="S60" value="2.152675410446609" />
+      <entry key="M2" value="3.4570716786764817" />
+      <entry key="M5" value="7.0889285851668635" />
+      <entry key="M10" value="10.253168901301907" />
+      <entry key="M15" value="11.791297402188562" />
+      <entry key="M30" value="13.67666017125161" />
+      <entry key="H1" value="14.777164519458976" />
+      <entry key="H2" value="15.495600209281012" />
+      <entry key="H4" value="19.32487510737026" />
+      <entry key="D1" value="84.89415957043178" />
+      <entry key="W1" value="131.55779514167875" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="0.0" />
-      <entry key="S5" value="0.0" />
-      <entry key="S10" value="0.0" />
-      <entry key="S30" value="0.0" />
-      <entry key="S60" value="0.0" />
-      <entry key="M2" value="0.0" />
-      <entry key="M5" value="0.0" />
-      <entry key="M10" value="0.0" />
-      <entry key="M15" value="0.0" />
-      <entry key="M30" value="0.0" />
-      <entry key="H1" value="0.0" />
-      <entry key="H2" value="0.0" />
-      <entry key="H4" value="0.0" />
-      <entry key="D1" value="0.0" />
-      <entry key="W1" value="0.0" />
+      <entry key="MS100" value="1.4199577927293428E-169" />
+      <entry key="MS500" value="1.740678530111158E-34" />
+      <entry key="S2" value="5.030848475146621E-9" />
+      <entry key="S5" value="7.088115629945856E-4" />
+      <entry key="S10" value="0.03748934667415659" />
+      <entry key="S30" value="0.5315875208730875" />
+      <entry key="S60" value="1.1096573109072114" />
+      <entry key="M2" value="2.325590959562387" />
+      <entry key="M5" value="6.073413781623505" />
+      <entry key="M10" value="9.524457703233335" />
+      <entry key="M15" value="11.236141565638283" />
+      <entry key="M30" value="13.357182962863709" />
+      <entry key="H1" value="14.605251129864818" />
+      <entry key="H2" value="15.372289974473448" />
+      <entry key="H4" value="18.34789961355692" />
+      <entry key="D1" value="67.89359156151153" />
+      <entry key="W1" value="103.12065035077796" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.940629081133246" />
-      <entry key="MS500" value="1.243917670917521" />
-      <entry key="S2" value="1.7084174278376734" />
-      <entry key="S5" value="1.8714786997597246" />
-      <entry key="S10" value="1.9335741926680414" />
-      <entry key="S30" value="1.9773585198232286" />
-      <entry key="S60" value="1.9886156307661023" />
-      <entry key="M2" value="1.9942918177463929" />
-      <entry key="M5" value="1.997712876041794" />
-      <entry key="M10" value="1.9988557952069652" />
-      <entry key="M15" value="1.9992370538850786" />
-      <entry key="M30" value="1.9996184554647418" />
-      <entry key="H1" value="1.9998092098595432" />
-      <entry key="H2" value="1.9999046004611423" />
-      <entry key="H4" value="1.999952299113361" />
-      <entry key="D1" value="1.9999920496970542" />
-      <entry key="W1" value="1.9999988642386362" />
+      <entry key="MS100" value="6.670118441183569E-4" />
+      <entry key="MS500" value="0.23164701547259273" />
+      <entry key="S2" value="0.6937564248718578" />
+      <entry key="S5" value="0.8676918720719203" />
+      <entry key="S10" value="1.024406226449404" />
+      <entry key="S30" value="2.038349874233631" />
+      <entry key="S60" value="3.221735593828406" />
+      <entry key="M2" value="5.7437194531973645" />
+      <entry key="M5" value="13.12582894094468" />
+      <entry key="M10" value="19.749865937795676" />
+      <entry key="M15" value="23.005782854511807" />
+      <entry key="M30" value="27.021059900672554" />
+      <entry key="H1" value="29.37544772878575" />
+      <entry key="H2" value="30.864214491485814" />
+      <entry key="H4" value="37.67038572913091" />
+      <entry key="D1" value="152.78575706465173" />
+      <entry key="W1" value="234.6779982513618" />
     </decayedShown>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3,
-  "fromUser": false
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3,
+  &quot;fromUser&quot;: false
+}</component>
   <component name="ProjectId" id="3FW7hw2HCkDjcs9tRZdkVQVvvEX" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.ReaKotlin [:CoroutineMainKt.main()].executor": "Run",
+    "Gradle.ReaKotlin [:MainKt.main()].executor": "Run",
+    "Gradle.ReaKotlin のビルド.executor": "Run",
     "Kotlin.MainKt.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
+    "git.auto.fetch.suggestion.counter": "1",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "onboarding.tips.debug.path": "/Users/haru133/IdeaProjects/ReaKotlin/src/Main.kt",
+    "project.structure.last.edited": "モジュール",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "ml.llm.mcp",
     "to.speed.mode.migration.done": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Kotlin.MainKt">
+    <configuration name="CoroutineMainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CoroutineMainKt" />
+      <module name="ReaKotlin.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="MainKt" />
-      <module name="ReaKotlin" />
+      <module name="ReaKotlin.main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -116,6 +198,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Kotlin.MainKt" />
+        <item itemvalue="Kotlin.CoroutineMainKt" />
       </list>
     </recent_temporary>
   </component>
@@ -136,19 +219,19 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="[add] init" />
     <option name="LAST_COMMIT_MESSAGE" value="[add] init" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/Main.kt</url>
-          <line>11</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
