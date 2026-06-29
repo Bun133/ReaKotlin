@@ -18,5 +18,5 @@ class HandleResult(val type: HandleResultType, val nextMessage: Message) {
 }
 
 abstract class Handler {
-    abstract suspend fun onMessage(message: Message)
+    abstract suspend fun onMessage(message: Message): HandleResult
 }

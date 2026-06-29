@@ -2,7 +2,6 @@ package server
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 
@@ -22,16 +21,24 @@ data class HTTPVersion(
 
 sealed interface Header {
     val httpVersion: HTTPVersion
+    val keyValue: Map<String, String>
+    val rawHeader: List<String>
 }
 
 data class ResponseHeader(
-    val status: Int, val headers: Map<String, String>, override val httpVersion: HTTPVersion
+    val status: Int,
+    val headers: Map<String, String>,
+    override val httpVersion: HTTPVersion,
+    override val rawHeader: List<String>,
+    override val keyValue: Map<String, String>
 ) : Header
 
 data class RequestHeader(
     override val httpVersion: HTTPVersion,
     val target: String,
-    val method: Method
+    val method: Method,
+    override val rawHeader: List<String>,
+    override val keyValue: Map<String, String>,
 ) : Header
 
 data class Message(
@@ -43,36 +50,31 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
     private var header: Header? = null
 
     // on Message Received
-    open fun onMessageReceived(message: Message) {}
+    open suspend fun onMessageReceived(message: Message) {}
 
     override suspend fun handleStream(scope: CoroutineScope, inputStream: InputStream): Message {
         return withContext(Dispatchers.IO) {
             val reader = inputStream.bufferedReader(Charsets.US_ASCII)
             try {
                 val lines: MutableList<String> = mutableListOf()
-                var isEmptyLineBefore = false
-
                 while (reader.ready()) {
-                    val line = reader.readText()
-                    line.lines().forEach { preciseLine ->
-                        when (status) {
-                            State.HEADER -> {
-                                // 2連続で改行が行われたらheader終了
-                                if (isEmptyLineBefore) {
-                                    // ここまでが Header
-                                    header = processHeader(lines.toList())
-                                    lines.clear()
-                                    status = State.BODY
-                                }
-                            }
-
-                            State.BODY -> {
+                    val line = reader.readLine()
+                    when (status) {
+                        State.HEADER -> {
+                            // 改行が行われたらheader終了
+                            if (line.isEmpty()) {
+                                // ここまでが Header
+                                header = processHeader(lines.toList())
+                                lines.clear()
+                                status = State.BODY
                             }
                         }
 
-                        lines.add(preciseLine)
-                        isEmptyLineBefore = preciseLine.isEmpty()
+                        State.BODY -> {
+                        }
                     }
+
+                    lines.add(line)
                 }
 
                 val message = Message(header!!)
@@ -96,9 +98,11 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
             Method.GET.name -> {
                 requestHeader(Method.GET, flatten)
             }
-            Method.PUT.name -> {
-                requestHeader(Method.PUT, flatten)
+
+            Method.POST.name -> {
+                requestHeader(Method.POST, flatten)
             }
+
             else -> {
                 responseHeader(flatten)
             }
@@ -107,11 +111,15 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
 
     private fun requestHeader(method: Method, lines: List<String>): RequestHeader {
         val firstLineSplit = lines.first().split(" ")
+        val remaining = lines.subList(1, lines.size)
+        val keyValue = parseKeyValueHeader(remaining)
 
         return RequestHeader(
             method = method,
             target = firstLineSplit[1],
             httpVersion = parseHTTPVersion(firstLineSplit[2]),
+            rawHeader = lines,
+            keyValue = keyValue
         )
     }
 
@@ -124,8 +132,17 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
             throw IllegalArgumentException("HTTP/1. Only HTTP/1.")
         }
 
-        val minorVersion = input.elementAt(7).code
+        val minorVersion = input.elementAt(7).digitToInt()
 
         return HTTPVersion(major = 1, minor = minorVersion)
+    }
+
+    private fun parseKeyValueHeader(headers: List<String>): Map<String, String> {
+        return headers.associate {
+            val splitIndex = it.indexOf(':')
+            val key = it.substring(0, splitIndex)
+            val value = it.substring(splitIndex + 1).trimStart()
+            Pair(key, value)
+        }
     }
 }
