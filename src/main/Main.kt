@@ -1,17 +1,18 @@
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import server.*
+import server.http.Request
 import server.http.Response
 import kotlin.random.Random
 
 class TestHandler : Handler() {
-    override suspend fun onMessage(message: Message): HandleResult {
-        println("[TestHandler] $message")
+    override suspend fun onRequest(request: Request): HandleResult {
+        println("[TestHandler] $request")
         if (Random.nextBoolean()) {
-            return message.response(Response.string("Body!"))
+            return request.response(Response.string("Body!"))
         }
 
-        return message.fail(Response.string("Failed!"))
+        return request.fail(Response.string("Failed!"))
     }
 }
 

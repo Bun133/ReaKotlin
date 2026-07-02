@@ -4,10 +4,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import server.header.HTTPVersion
-import server.header.Header
 import server.header.Method
 import server.header.RequestHeader
-import server.header.ResponseHeader
+import server.http.Request
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -16,18 +15,18 @@ private enum class State {
     BODY,
 }
 
-data class Message(
-    val header: Header
-)
-
-open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
+open class HTTPServerSocket(port: Int) : BaseServerSocket<Request>(port) {
     private var status: State = State.HEADER
-    private var header: Header? = null
+    private var header: RequestHeader? = null
 
     // on Message Received
-    open suspend fun onMessageReceived(message: Message, outputStream: OutputStream) {}
+    open suspend fun onRequest(request: Request, outputStream: OutputStream) {}
 
-    override suspend fun handleStream(scope: CoroutineScope, inputStream: InputStream, outputStream: OutputStream): Message {
+    override suspend fun handleStream(
+        scope: CoroutineScope,
+        inputStream: InputStream,
+        outputStream: OutputStream
+    ): Request {
         return withContext(Dispatchers.IO) {
             val reader = inputStream.bufferedReader(Charsets.US_ASCII)
             try {
@@ -52,8 +51,8 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
                     lines.add(line)
                 }
 
-                val message = Message(header!!)
-                onMessageReceived(message, outputStream)
+                val message = Request(header!!, ByteArray(1))
+                onRequest(message, outputStream)
                 return@withContext message
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -65,7 +64,7 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
         }
     }
 
-    private fun processHeader(lines: List<String>): Header {
+    private fun processHeader(lines: List<String>): RequestHeader {
         val flatten = lines.flatMap { it.lines() }
 
         val firstLineSpritted = flatten[0].split(" ")
@@ -79,7 +78,7 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
             }
 
             else -> {
-                responseHeader(flatten)
+                TODO()
             }
         }
     }
@@ -95,10 +94,6 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
             httpVersion = parseHTTPVersion(firstLineSplit[2]),
             keyValue = keyValue
         )
-    }
-
-    private fun responseHeader(lines: List<String>): ResponseHeader {
-        TODO()
     }
 
     private fun parseHTTPVersion(input: String): HTTPVersion {

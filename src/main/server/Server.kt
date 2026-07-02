@@ -2,8 +2,8 @@ package server
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import server.header.ResponseHeader
 import server.http.HTTPCode
+import server.http.Request
 import server.http.Response
 import java.io.OutputStream
 import java.nio.ByteBuffer
@@ -22,13 +22,13 @@ class Server(port: Int) {
         handlers.add(handler)
     }
 
-    internal suspend fun processMessage(message: Message): HandleResult {
-        var targetMessage = message
+    internal suspend fun processMessage(request: Request): HandleResult {
+        var targetRequest = request
         for (handler in handlers) {
-            val result = handler.onMessage(targetMessage)
+            val result = handler.onRequest(targetRequest)
             when (result.type) {
                 is HandleResultType.NEXT -> {
-                    targetMessage = result.type.nextMessage
+                    targetRequest = result.type.nextRequest
                 }
 
                 is HandleResultType.RESPONSE -> {
@@ -42,41 +42,35 @@ class Server(port: Int) {
         }
 
         // No Response From Handlers
-        return defaultHandleResult(message)
+        return defaultHandleResult(request)
     }
 
-    private fun defaultHandleResult(message: Message): HandleResult {
-        return message.fail(Response.string("No Matching Handler"))
+    private fun defaultHandleResult(request: Request): HandleResult {
+        return request.fail(Response.string("No Matching Handler"))
     }
 }
 
 private class ServerSocket(port: Int, val serverInstance: Server) : HTTPServerSocket(port) {
-    override suspend fun onMessageReceived(message: Message, outputStream: OutputStream) {
-        val result = serverInstance.processMessage(message)
-        this.writeResult(result, outputStream)
+    override suspend fun onRequest(request: Request, outputStream: OutputStream) {
+        val result = serverInstance.processMessage(request)
+        when (result.type) {
+            is HandleResultType.NEXT -> {
+                throw IllegalArgumentException("HandleResultType.NEXT cannot be the final response type")
+            }
+
+            is HandleResultType.RESPONSE -> {
+                this.writeResult(result.type, result.type.response, result.type.code, outputStream)
+            }
+
+            is HandleResultType.FAILURE -> {
+                this.writeResult(result.type, result.type.response, result.type.code, outputStream)
+            }
+        }
     }
 
-    private fun writeResult(result: HandleResult, outputStream: OutputStream) {
-        var responseHeader: ResponseHeader? = null
-        var response: Response? = null
-        var code: HTTPCode? = null
-
-        if (result.type is HandleResultType.RESPONSE) {
-            responseHeader = result.type.response.header
-            response = result.type.response
-            code = result.type.code
-        } else if (result.type is HandleResultType.FAILURE) {
-            responseHeader = result.type.response.header
-            response = result.type.response
-            code = result.type.code
-        }
-
-        if (responseHeader == null || response == null || code == null) {
-            throw IllegalArgumentException("HandleResultType ${result.type} cannot be written to output stream")
-        }
-
-        val statusLine = "${responseHeader.httpVersion} ${code.code}"
-        val headerLines = responseHeader.keyValue.map { "${it.key}: ${it.value}" }.joinToString("\r\n")
+    private fun writeResult(type: HandleResultType, response: Response, code: HTTPCode, outputStream: OutputStream) {
+        val statusLine = "${response.header.httpVersion} ${code.code}"
+        val headerLines = response.header.keyValue.map { "${it.key}: ${it.value}" }.joinToString("\r\n")
         val separatorLine = "\r\n"
         val header = listOf(statusLine, headerLines, separatorLine).filter { it.isNotEmpty() }.joinToString("\r\n")
         println(header)
