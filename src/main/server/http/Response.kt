@@ -21,5 +21,15 @@ data class Response(
                 body = body.toByteArray(),
             )
         }
+
+        fun html(data: String): Response {
+            return Response(
+                header = ResponseHeader(
+                    httpVersion = ResponseHTTPVersion, keyValue = mapOf(),
+                    contentType = ContentType(MIME.HTML)
+                ),
+                body = data.toByteArray(),
+            )
+        }
     }
 }
