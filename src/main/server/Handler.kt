@@ -6,7 +6,7 @@ import server.http.Response
 sealed class HandleResultType {
     data class NEXT(val nextMessage: Message) : HandleResultType()
     data class RESPONSE(val response: Response, val code: HTTPCode) : HandleResultType()
-    data class FAILURE(val errorMessage: String, val code: HTTPCode) : HandleResultType()
+    data class FAILURE(val response: Response, val code: HTTPCode) : HandleResultType()
 }
 
 fun Message.next(): HandleResult {
@@ -17,8 +17,8 @@ fun Message.response(response: Response, code: HTTPCode = HTTPCode.OK): HandleRe
     return HandleResult(HandleResultType.RESPONSE(response, code), this)
 }
 
-fun Message.fail(message: String, code: HTTPCode): HandleResult {
-    return HandleResult(HandleResultType.FAILURE(message, code), this)
+fun Message.fail(response: Response, code: HTTPCode = HTTPCode.INTERNAL_SERVER_ERROR): HandleResult {
+    return HandleResult(HandleResultType.FAILURE(response, code), this)
 }
 
 class HandleResult(val type: HandleResultType, val processedMessage: Message)

@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5666c2b6-1263-4385-8684-d2ce8931eb1a" name="変更" comment="[add] header parser">
-      <change afterPath="$PROJECT_DIR$/src/main/server/header/Header.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/server/http/HTTPCode.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/server/http/Response.kt" afterDir="false" />
+    <list default="true" id="5666c2b6-1263-4385-8684-d2ce8931eb1a" name="変更" comment="[add] Response to GET">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/server/BaseServerSocket.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/server/BaseServerSocket.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/server/HTTPServerSocket.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/server/http/HTTPServerSocket.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/server/Handler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/server/Handler.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/server/Server.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/server/Server.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/server/header/Header.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/server/header/Header.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/server/http/Response.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/server/http/Response.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,61 +81,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0000495759519261" />
-      <entry key="S5" value="1.0189717950686725" />
-      <entry key="S10" value="1.1377381394845762" />
-      <entry key="S30" value="1.5164378575746935" />
-      <entry key="S60" value="1.7186361092894606" />
-      <entry key="M2" value="1.847724076153002" />
-      <entry key="M5" value="1.9360559476005426" />
-      <entry key="M10" value="1.967499843721198" />
-      <entry key="M15" value="1.9782141388149672" />
-      <entry key="M30" value="1.9890470862476504" />
-      <entry key="H1" value="1.994508464644001" />
-      <entry key="H2" value="1.997253998395118" />
-      <entry key="H4" value="2.0112185535607545" />
-      <entry key="D1" value="28.939375118625147" />
-      <entry key="W1" value="161.9166600831152" />
-    </decayedCancelled>
-    <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
       <entry key="S5" value="0.0" />
-      <entry key="S10" value="0.0" />
-      <entry key="S30" value="0.0" />
-      <entry key="S60" value="0.0" />
-      <entry key="M2" value="0.0" />
-      <entry key="M5" value="4.431451838467957E-161" />
-      <entry key="M10" value="2.1056420292013352E-80" />
-      <entry key="M15" value="1.678041086230195E-53" />
-      <entry key="M30" value="1.359857607848728E-26" />
-      <entry key="H1" value="4.495671698499203E-13" />
-      <entry key="H2" value="3.931633293204516E-6" />
-      <entry key="H4" value="0.01515612643476714" />
-      <entry key="D1" value="28.183621872833942" />
-      <entry key="W1" value="150.19126605770995" />
+      <entry key="S10" value="4.239069599637981E-304" />
+      <entry key="S30" value="8.459729711723852E-102" />
+      <entry key="S60" value="5.311159299164283E-51" />
+      <entry key="M2" value="2.43284772813211E-25" />
+      <entry key="M5" value="9.305277901274058E-10" />
+      <entry key="M10" value="1.6182445920022684E-4" />
+      <entry key="M15" value="0.009197768767175875" />
+      <entry key="M30" value="0.5295150904493536" />
+      <entry key="H1" value="4.041788526122712" />
+      <entry key="H2" value="11.18629864426579" />
+      <entry key="H4" value="18.625903672527237" />
+      <entry key="D1" value="52.97664538484174" />
+      <entry key="W1" value="188.39098708850574" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0" />
+      <entry key="S30" value="1.0" />
+      <entry key="S60" value="1.0" />
+      <entry key="M2" value="1.0" />
+      <entry key="M5" value="1.0000000010643932" />
+      <entry key="M10" value="1.000195538796759" />
+      <entry key="M15" value="1.011305213304105" />
+      <entry key="M30" value="1.6602777292697393" />
+      <entry key="H1" value="6.0670280962606595" />
+      <entry key="H2" value="15.052206799259409" />
+      <entry key="H4" value="24.416507217304815" />
+      <entry key="D1" value="62.45264711846947" />
+      <entry key="W1" value="187.69930932824587" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="2.0492063017873773E-13" />
-      <entry key="MS500" value="0.002899460098884863" />
-      <entry key="S2" value="0.23207592129550883" />
-      <entry key="S5" value="0.5723928606289534" />
-      <entry key="S10" value="0.8687534076237343" />
-      <entry key="S30" value="1.4033151658211565" />
-      <entry key="S60" value="1.6568240370967817" />
-      <entry key="M2" value="1.8152034782184152" />
-      <entry key="M5" value="1.922613177621596" />
-      <entry key="M10" value="1.9607017077477058" />
-      <entry key="M15" value="1.973664655916405" />
-      <entry key="M30" value="1.9867635629749638" />
-      <entry key="H1" value="1.993364491333337" />
-      <entry key="H2" value="1.9966853873516968" />
-      <entry key="H4" value="2.0260862162806403" />
-      <entry key="D1" value="57.122225247388556" />
-      <entry key="W1" value="312.10732537919046" />
+      <entry key="MS100" value="2.315892952718825E-6" />
+      <entry key="MS500" value="0.07463519919216184" />
+      <entry key="S2" value="0.5226800501025824" />
+      <entry key="S5" value="0.7714261731252398" />
+      <entry key="S10" value="0.8783087003583875" />
+      <entry key="S30" value="0.9576696590004549" />
+      <entry key="S60" value="0.9786059773986948" />
+      <entry key="M2" value="0.9892451553577075" />
+      <entry key="M5" value="0.9956841039529751" />
+      <entry key="M10" value="0.998196395628798" />
+      <entry key="M15" value="1.0190358407184974" />
+      <entry key="M30" value="2.1882954590295234" />
+      <entry key="H1" value="10.105458706615545" />
+      <entry key="H2" value="26.234153494109965" />
+      <entry key="H4" value="43.03883787136486" />
+      <entry key="D1" value="115.42772940738082" />
+      <entry key="W1" value="376.08957158008354" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -152,7 +149,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.ReaKotlin [:CoroutineMainKt.main()].executor": "Run",
-    "Gradle.ReaKotlin [:MainKt.main()].executor": "Debug",
+    "Gradle.ReaKotlin [:MainKt.main()].executor": "Run",
     "Gradle.ReaKotlin のビルド.executor": "Run",
     "Kotlin.MainKt.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -227,6 +224,18 @@
     <MESSAGE value="[add] init" />
     <MESSAGE value="[add] he-" />
     <MESSAGE value="[add] header parser" />
-    <option name="LAST_COMMIT_MESSAGE" value="[add] header parser" />
+    <MESSAGE value="[add] Response to GET" />
+    <option name="LAST_COMMIT_MESSAGE" value="[add] Response to GET" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/server/http/HTTPServerSocket.kt</url>
+          <line>100</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

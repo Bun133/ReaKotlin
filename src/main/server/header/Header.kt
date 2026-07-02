@@ -21,7 +21,6 @@ sealed interface Header {
 }
 
 data class ResponseHeader(
-    val code: HTTPCode,
     override val httpVersion: HTTPVersion,
     override val keyValue: Map<String, String>
 ) : Header

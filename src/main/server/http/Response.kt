@@ -10,10 +10,10 @@ class Response(
     val body: ByteArray,
 ) {
     companion object {
-        fun string(body: String, code: HTTPCode = HTTPCode.OK): Response {
+        fun string(body: String): Response {
             return Response(
                 header = ResponseHeader(
-                    code, httpVersion = ResponseHTTPVersion, keyValue = mapOf()
+                    httpVersion = ResponseHTTPVersion, keyValue = mapOf()
                 ),
                 body = body.toByteArray(),
             )

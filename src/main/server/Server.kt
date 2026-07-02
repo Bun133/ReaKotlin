@@ -2,6 +2,7 @@ package server
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import server.header.ResponseHeader
 import server.http.HTTPCode
 import server.http.Response
 import java.io.OutputStream
@@ -21,7 +22,7 @@ class Server(port: Int) {
         handlers.add(handler)
     }
 
-    internal suspend fun processMessage(message: Message): Response {
+    internal suspend fun processMessage(message: Message): HandleResult {
         var targetMessage = message
         for (handler in handlers) {
             val result = handler.onMessage(targetMessage)
@@ -29,36 +30,56 @@ class Server(port: Int) {
                 is HandleResultType.NEXT -> {
                     targetMessage = result.type.nextMessage
                 }
+
                 is HandleResultType.RESPONSE -> {
-                    return result.type.response
+                    return result
                 }
+
                 is HandleResultType.FAILURE -> {
-                    // Give up
-                    throw Error("Handler Failed: ${result.type}")
+                    return result
                 }
             }
         }
 
         // No Response From Handlers
-        return defaultResponse()
+        return defaultHandleResult(message)
     }
 
-    private fun defaultResponse():Response{
-        return Response.string("No Matching Handler", HTTPCode.INTERNAL_SERVER_ERROR)
+    private fun defaultHandleResult(message: Message): HandleResult {
+        return message.fail(Response.string("No Matching Handler"))
     }
 }
 
-private class ServerSocket(port: Int, val serverInstance: Server): HTTPServerSocket(port) {
+private class ServerSocket(port: Int, val serverInstance: Server) : HTTPServerSocket(port) {
     override suspend fun onMessageReceived(message: Message, outputStream: OutputStream) {
-        val response = serverInstance.processMessage(message)
-        this.writeResponse(response, outputStream)
+        val result = serverInstance.processMessage(message)
+        this.writeResult(result, outputStream)
     }
 
-    private fun writeResponse(response: Response, outputStream: OutputStream) {
-        val statusLine = "${response.header.httpVersion} ${response.header.code.code}"
-        val headerLines = response.header.keyValue.map { "${it.key}: ${it.value}" }.joinToString("\r\n")
+    private fun writeResult(result: HandleResult, outputStream: OutputStream) {
+        var responseHeader: ResponseHeader? = null
+        var response: Response? = null
+        var code: HTTPCode? = null
+
+        if (result.type is HandleResultType.RESPONSE) {
+            responseHeader = result.type.response.header
+            response = result.type.response
+            code = result.type.code
+        } else if (result.type is HandleResultType.FAILURE) {
+            responseHeader = result.type.response.header
+            response = result.type.response
+            code = result.type.code
+        }
+
+        if (responseHeader == null || response == null || code == null) {
+            throw IllegalArgumentException("HandleResultType ${result.type} cannot be written to output stream")
+        }
+
+        val statusLine = "${responseHeader.httpVersion} ${code.code}"
+        val headerLines = responseHeader.keyValue.map { "${it.key}: ${it.value}" }.joinToString("\r\n")
         val separatorLine = "\r\n"
-        val header = listOf(statusLine, headerLines, separatorLine).joinToString("\r\n")
+        val header = listOf(statusLine, headerLines, separatorLine).filter { it.isNotEmpty() }.joinToString("\r\n")
+        println(header)
         val headerBytes = header.toByteArray()
         val bodyLines = response.body
 
