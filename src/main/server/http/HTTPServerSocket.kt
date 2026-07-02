@@ -6,19 +6,12 @@ import kotlinx.coroutines.withContext
 import server.header.HTTPVersion
 import server.header.Method
 import server.header.RequestHeader
+import server.header.ResponseHeader
 import server.http.Request
 import java.io.InputStream
 import java.io.OutputStream
 
-private enum class State {
-    HEADER,
-    BODY,
-}
-
 open class HTTPServerSocket(port: Int) : BaseServerSocket<Request>(port) {
-    private var status: State = State.HEADER
-    private var header: RequestHeader? = null
-
     // on Message Received
     open suspend fun onRequest(request: Request, outputStream: OutputStream) {}
 
@@ -30,28 +23,24 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Request>(port) {
         return withContext(Dispatchers.IO) {
             val reader = inputStream.bufferedReader(Charsets.US_ASCII)
             try {
-                val lines: MutableList<String> = mutableListOf()
-                while (reader.ready()) {
-                    val line = reader.readLine()
-                    when (status) {
-                        State.HEADER -> {
-                            // 改行が行われたらheader終了
-                            if (line.isEmpty()) {
-                                // ここまでが Header
-                                header = processHeader(lines.toList())
-                                lines.clear()
-                                status = State.BODY
-                            }
-                        }
-
-                        State.BODY -> {
+                val headerLines = mutableListOf<String>()
+                while (true){
+                    if (reader.ready()){
+                        val line = reader.readLine()
+                        if (line.isNotEmpty()){
+                            headerLines.add(line)
+                        } else {
+                            // empty line, end of the header
+                            break
                         }
                     }
-
-                    lines.add(line)
                 }
+                val header = processHeader(headerLines)
 
-                val message = Request(header!!, ByteArray(1))
+                // TODO 終了検知
+                // val body = reader.readAllAsString()
+
+                val message = Request(header, ByteArray(1))
                 onRequest(message, outputStream)
                 return@withContext message
             } catch (e: Exception) {

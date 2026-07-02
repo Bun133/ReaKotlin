@@ -70,10 +70,16 @@ private class ServerSocket(port: Int, val serverInstance: Server) : HTTPServerSo
 
     private fun writeResult(type: HandleResultType, response: Response, code: HTTPCode, outputStream: OutputStream) {
         val statusLine = "${response.header.httpVersion} ${code.code}"
-        val headerLines = response.header.keyValue.map { "${it.key}: ${it.value}" }.joinToString("\r\n")
+        val headerLines = response.header.toHeaderLines()
         val separatorLine = "\r\n"
-        val header = listOf(statusLine, headerLines, separatorLine).filter { it.isNotEmpty() }.joinToString("\r\n")
+
+        val headingLines = mutableListOf<String>()
+        headingLines.add(statusLine)
+        headingLines.addAll(headerLines)
+        headingLines.add(separatorLine)
+        val header = headingLines.joinToString("\r\n")
         println(header)
+
         val headerBytes = header.toByteArray()
         val bodyLines = response.body
 

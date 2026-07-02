@@ -2,8 +2,7 @@ package server.http
 
 import server.header.RequestHeader
 
-class Request(
+data class Request(
     val header: RequestHeader,
     val body: ByteArray
-) {
-}
+)
