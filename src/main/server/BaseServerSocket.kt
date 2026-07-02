@@ -2,6 +2,7 @@ package server
 
 import kotlinx.coroutines.*
 import java.io.InputStream
+import java.io.OutputStream
 import java.net.Socket
 import java.net.ServerSocket as JavaServerSocket
 
@@ -14,16 +15,20 @@ abstract class BaseServerSocket<M>(port: Int) {
     }
 
     // handling input stream from socket, triggering other process.
-    abstract suspend fun handleStream(scope: CoroutineScope, inputStream: InputStream): M
+    abstract suspend fun handleStream(scope: CoroutineScope, inputStream: InputStream, outputStream: OutputStream): M
 
     fun start(scope: CoroutineScope) {
+        var inputStream: InputStream? = null
+        var outputStream: OutputStream? = null
         scope.launch(Dispatchers.IO) {
             try {
                 while (isActive) {
                     val newSocket = accept()
                     println("New socket accepted: ${newSocket.remoteSocketAddress}")
                     supervisorScope {
-                        handleStream(this, newSocket.getInputStream())
+                        inputStream = newSocket.getInputStream()
+                        outputStream = newSocket.getOutputStream()
+                        handleStream(this, inputStream, outputStream)
                     }
                 }
             } catch (e: Exception) {
@@ -32,6 +37,8 @@ abstract class BaseServerSocket<M>(port: Int) {
                 if (!socket.isClosed) {
                     socket.close()
                 }
+                inputStream?.close()
+                outputStream?.close()
             }
         }
     }

@@ -4,11 +4,13 @@ import server.HandleResult
 import server.Handler
 import server.Message
 import server.Server
+import server.http.Response
+import server.response
 
 class TestHandler : Handler() {
     override suspend fun onMessage(message: Message): HandleResult {
         println("[TestHandler] $message")
-        return HandleResult.ok(message)
+        return message.response(Response.string("Body!"))
     }
 }
 

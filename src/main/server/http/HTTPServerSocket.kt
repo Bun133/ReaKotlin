@@ -3,43 +3,18 @@ package server
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import server.header.HTTPVersion
+import server.header.Header
+import server.header.Method
+import server.header.RequestHeader
+import server.header.ResponseHeader
 import java.io.InputStream
+import java.io.OutputStream
 
 private enum class State {
     HEADER,
     BODY,
 }
-
-enum class Method {
-    GET, POST, PUT, PATCH, DELETE, CONNECT, OPTIONS, TRACE
-}
-
-data class HTTPVersion(
-    val major: Int,
-    val minor: Int,
-)
-
-sealed interface Header {
-    val httpVersion: HTTPVersion
-    val keyValue: Map<String, String>
-    val rawHeader: List<String>
-}
-
-data class ResponseHeader(
-    val status: Int,
-    val headers: Map<String, String>,
-    override val httpVersion: HTTPVersion,
-    override val rawHeader: List<String>,
-    override val keyValue: Map<String, String>
-) : Header
-
-data class RequestHeader(
-    override val httpVersion: HTTPVersion,
-    val target: String,
-    val method: Method,
-    override val rawHeader: List<String>,
-    override val keyValue: Map<String, String>,
-) : Header
 
 data class Message(
     val header: Header
@@ -50,9 +25,9 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
     private var header: Header? = null
 
     // on Message Received
-    open suspend fun onMessageReceived(message: Message) {}
+    open suspend fun onMessageReceived(message: Message, outputStream: OutputStream) {}
 
-    override suspend fun handleStream(scope: CoroutineScope, inputStream: InputStream): Message {
+    override suspend fun handleStream(scope: CoroutineScope, inputStream: InputStream, outputStream: OutputStream): Message {
         return withContext(Dispatchers.IO) {
             val reader = inputStream.bufferedReader(Charsets.US_ASCII)
             try {
@@ -78,7 +53,7 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
                 }
 
                 val message = Message(header!!)
-                onMessageReceived(message)
+                onMessageReceived(message, outputStream)
                 return@withContext message
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -118,7 +93,6 @@ open class HTTPServerSocket(port: Int) : BaseServerSocket<Message>(port) {
             method = method,
             target = firstLineSplit[1],
             httpVersion = parseHTTPVersion(firstLineSplit[2]),
-            rawHeader = lines,
             keyValue = keyValue
         )
     }
